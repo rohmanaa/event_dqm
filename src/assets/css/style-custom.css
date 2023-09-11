@@ -1,0 +1,45 @@
+body {
+    background-color: rgb(230, 230, 230);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Membuat form berada di tengah vertikal */
+    margin: 0; /* Menghilangkan margin pada body */
+}
+
+/* Gaya untuk header form */
+.custom-form .custom-form-title {
+    background-color: #1A3257 !important;
+    color: #fff; /* Warna teks menjadi putih */
+    margin: 0; /* Menghilangkan margin atas dan bawah pada header form */
+    border-radius: 10px 10px 0 0; /* Melengkungkan sudut atas header */
+}
+
+/* Gaya untuk tombol "Submit" */
+.custom-submit-button {
+    background-color: #1A3257 !important;
+    color: #fff;
+    width: 100%; /* Membuat tombol menjadi full width */
+    border: none;
+}
+
+/* Kustomisasi tambahan jika diperlukan */
+.custom-label {
+    font-weight: bold;
+}
+
+.custom-form {
+    border: 1px solid #ccc;
+    border-top: none; /* Menghilangkan border atas pada form */
+    padding: 20px;
+    border-radius: 10px 10px 10px 10px; /* Melengkungkan sudut bawah form */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff; /* Latar belakang form tetap putih */
+}
+
+.custom-form-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
