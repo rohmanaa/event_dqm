@@ -1,12 +1,17 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-// Import Bootstrap CSS
+//import Bootstrap
 import 'bootstrap/dist/css/bootstrap.css'
-
+import 'bootstrap/dist/js/bootstrap.min'
+import 'bootstrap/dist/js/bootstrap.bundle.min'
 import './assets/css/style-custom.css'
 
-// Import Bootstrap JS (Popper.js and Bootstrap)
-import 'bootstrap/dist/js/bootstrap.bundle.min'
+//import router
+import router from './router'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+
+//use vue router
+app.use(router)
+app.mount('#app')

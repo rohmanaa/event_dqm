@@ -17,10 +17,21 @@ body {
 
 /* Gaya untuk tombol "Submit" */
 .custom-submit-button {
-    background-color: #1A3257 !important;
-    color: #fff;
-    width: 100%; /* Membuat tombol menjadi full width */
-    border: none;
+  background-color: #1A3257 !important;
+  color: #fff;
+  width: 100%;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.custom-submit-button:hover {
+  background-color: #102242 !important;
+}
+
+.custom-submit-button:disabled {
+  background-color: #0f9461 !important; /* Warna latar belakang saat tombol disabled */
+  color: #1A3257 !important; /* Warna teks saat tombol disabled */
+  cursor: not-allowed; /* Kursor tidak dapat digunakan saat tombol disabled */
 }
 
 /* Kustomisasi tambahan jika diperlukan */

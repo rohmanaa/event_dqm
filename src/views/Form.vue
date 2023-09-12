@@ -48,7 +48,7 @@
             </div>
 
             <div class="mb-3 text-start">
-              <label for="n0_hp" class="form-label custom-label">No HP</label>
+              <label for="no_hp" class="form-label custom-label">No HP</label>
               <input
                 type="text"
                 class="form-control"
@@ -82,6 +82,7 @@
                   class="form-check-input"
                   type="radio"
                   id="konfirmasi_datang"
+                  value="Datang"
                   v-model="konfirmasi_datang"
                 />
                 <label class="form-check-label" for="konfirmasi_datang">Datang</label>
@@ -90,10 +91,11 @@
                 <input
                   class="form-check-input"
                   type="radio"
-                  id="konfirmasi_datang"
+                  id="konfirmasi_tidak_datang"
+                  value="Tidak Datang"
                   v-model="konfirmasi_datang"
                 />
-                <label class="form-check-label" for="konfirmasi_datang"
+                <label class="form-check-label" for="konfirmasi_tidak_datang"
                   >Tidak datang</label
                 >
               </div>
@@ -103,38 +105,20 @@
             </div>
 
             <!-- Tombol "Submit" dengan gaya yang disesuaikan -->
-            <button type="submit" class="btn custom-submit-button">Submit</button>
+            <button type="submit" class="btn custom-submit-button" :disabled="isLoading">
+              {{ isLoading ? "Sedang Mengirim..." : "Submit" }}
+            </button>
           </form>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Toast "Berhasil Terdaftar" -->
-  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div
-      id="toast"
-      class="toast hide"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-    >
-      <div class="toast-header">
-        <strong class="me-auto">Berhasil Terdaftar</strong>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="toast"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="toast-body">Terima kasih, Anda telah berhasil terdaftar!</div>
-    </div>
-  </div>
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import axios from "axios";
+
 export default {
   name: "HelloWorld",
   data() {
@@ -151,10 +135,11 @@ export default {
       no_hpError: false,
       jumlah_datangError: false,
       konfirmasi_datangError: false,
+      isLoading: false, // Tambahkan variabel isLoading
     };
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       // Menghapus pesan kesalahan sebelum validasi
       this.clearErrors();
 
@@ -167,50 +152,61 @@ export default {
         this.jumlah_datang === null ||
         !this.konfirmasi_datang
       ) {
-        if (!this.nama_anak) this.nama_anakError = true;
-        if (!this.nama_ayah) this.nama_ayahError = true;
-        if (!this.nama_ibu) this.nama_ibuError = true;
-        if (!this.no_hp) this.no_hpError = true;
-        if (this.jumlah_datang === null) this.jumlah_datangError = true;
-        if (!this.konfirmasi_datang) this.konfirmasi_datangError = true;
+        this.setFormErrors();
         return;
       }
 
-      // Data yang akan dikirim ke API
+      // Aktifkan indikator loading
+      this.isLoading = true;
 
-      const dataToSend = JSON.stringify({
+      // Data yang akan dikirim ke API
+      const dataToSend = {
         nama_anak: this.nama_anak,
         nama_ayah: this.nama_ayah,
         nama_ibu: this.nama_ibu,
         no_hp: this.no_hp,
         jumlah_datang: this.jumlah_datang,
         konfirmasi_datang: this.konfirmasi_datang,
-      });
+      };
 
       // Kirim data ke API
       axios.defaults.headers.common["Content-Type"] = "application/json";
 
-      axios
-        .post("http://10.10.106.212:3000/api/dataortu", dataToSend)
-        .then((response) => {
-          // Handle respons dari API jika diperlukan
-          console.log(response.data);
+      try {
+        const response = await axios.post(
+          "https://api-1-gtw.dq.akses.live/events/api/dataortu",
+          dataToSend
+        );
 
-          // Menampilkan toast "Berhasil Terdaftar"
-          var toast = document.getElementById("toast");
-          toast.classList.add("show");
+        // Handle respons dari API jika diperlukan
+        console.log(response.data);
 
-          // Menutup toast setelah 5 detik
-          setTimeout(() => {
-            toast.classList.remove("show");
-            // Reset formulir
-            this.resetForm();
-          }, 3000);
-        })
-        .catch((error) => {
-          // Handle kesalahan jika terjadi saat mengirim ke API
-          console.error(error);
+        // Menampilkan SweetAlert "Berhasil Terdaftar"
+        await Swal.fire({
+          icon: "success",
+          title: "Berhasil Terdaftar",
+          text: "Data Anda telah berhasil terdaftar.",
+          timer: 3000,
+          showConfirmButton: false,
         });
+
+        // Reset formulir dan nonaktifkan indikator loading
+        this.resetForm();
+        this.isLoading = false;
+      } catch (error) {
+        // Handle kesalahan jika terjadi saat mengirim ke API
+        console.error(error);
+
+        // Menampilkan SweetAlert kesalahan
+        await Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Terjadi kesalahan saat mengirim data ke server.",
+        });
+
+        // Nonaktifkan indikator loading
+        this.isLoading = false;
+      }
     },
     clearErrors() {
       // Menghapus pesan kesalahan
@@ -220,6 +216,15 @@ export default {
       this.no_hpError = false;
       this.jumlah_datangError = false;
       this.konfirmasi_datangError = false;
+    },
+    setFormErrors() {
+      // Menampilkan pesan kesalahan
+      if (!this.nama_anak) this.nama_anakError = true;
+      if (!this.nama_ayah) this.nama_ayahError = true;
+      if (!this.nama_ibu) this.nama_ibuError = true;
+      if (!this.no_hp) this.no_hpError = true;
+      if (this.jumlah_datang === null) this.jumlah_datangError = true;
+      if (!this.konfirmasi_datang) this.konfirmasi_datangError = true;
     },
     resetForm() {
       // Mereset nilai-nilai dalam formulir
