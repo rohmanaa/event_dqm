@@ -1,5 +1,6 @@
-# Gunakan image Node.js sebagai base image
-FROM node:14-alpine
+# Gunakan image Node.js yang didukung pnpm minimal 16
+# https://hub.docker.com/_/node
+FROM node:16-alpine
 
 # Buat direktori kerja dalam kontainer
 RUN mkdir /home/event
