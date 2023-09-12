@@ -1,5 +1,5 @@
 # Gunakan image Node.js sebagai base image
-FROM node:14
+FROM node:14-alpine
 
 # Buat direktori kerja dalam kontainer
 WORKDIR /src/
