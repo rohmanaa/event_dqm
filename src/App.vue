@@ -1,17 +1,16 @@
 <template>
-  <img eventgm alt="Vue logo" src="./assets/event.png">
-  <Form msg=""/>
+  <Form msg="" />
 </template>
 
 <script>
-import Form from './components/Form.vue'
+import Form from "./components/Form.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Form
-  }
-}
+    Form,
+  },
+};
 </script>
 
 <style>
