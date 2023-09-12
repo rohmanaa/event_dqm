@@ -186,7 +186,7 @@ export default {
           icon: "success",
           title: "Berhasil Terdaftar",
           text: "Data Anda telah berhasil terdaftar.",
-          timer: 3000,
+          timer: 5000,
           showConfirmButton: false,
         });
 
