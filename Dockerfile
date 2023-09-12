@@ -2,19 +2,20 @@
 FROM node:14-alpine
 
 # Buat direktori kerja dalam kontainer
-WORKDIR /src/
+RUN mkdir /home/event
+WORKDIR /home/event
 
 # Salin package.json dan package-lock.json (jika ada) ke dalam kontainer
 COPY package*.json ./
 
 # Install dependensi aplikasi
-RUN npm install
+RUN npm install --production
 
 # Salin berkas .env dari direktori lokal ke dalam kontainer
-COPY .env ./.env
+COPY .env .
 
 # Salin folder src/views dari direktori lokal ke dalam kontainer
-COPY src/views ./src/views
+COPY src/ .
 
 # Build aplikasi Vue.js dengan perintah yang sesuai
 RUN npm run build
