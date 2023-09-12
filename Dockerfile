@@ -8,11 +8,14 @@ WORKDIR /home/event
 # Salin semua berkas kecuali di .dockerignore
 COPY . .
 
-# Install semua dependensi menggunakan yarn production
-RUN yarn install --production
+# install pnpm
+RUN npm install -g pnpm
+
+# Install semua dependensi menggunakan pnpm
+RUN pnpm install
 
 # Build aplikasi
-RUN yarn build
+RUN pnpm run build
 
 # Port yang akan digunakan oleh aplikasi (sesuaikan dengan aplikasi Anda)
 EXPOSE 8000
