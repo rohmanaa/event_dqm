@@ -5,23 +5,17 @@ FROM node:14-alpine
 RUN mkdir /home/event
 WORKDIR /home/event
 
-# Salin package.json dan package-lock.json (jika ada) ke dalam kontainer
-COPY package*.json ./
+# Salin semua berkas kecuali di .dockerignore
+COPY . .
 
-# Install dependensi aplikasi
-RUN npm install --production
+# Install semua dependensi menggunakan yarn production
+RUN yarn install --production
 
-# Salin berkas .env dari direktori lokal ke dalam kontainer
-COPY .env .
-
-# Salin folder src/views dari direktori lokal ke dalam kontainer
-COPY src/ .
-
-# Konfigurasi server HTTP (opsional, tergantung pada aplikasi Anda)
-# COPY nginx.conf /etc/nginx/nginx.conf
+# Build aplikasi
+RUN yarn build
 
 # Port yang akan digunakan oleh aplikasi (sesuaikan dengan aplikasi Anda)
-EXPOSE 8083
+EXPOSE 8000
 
-# Perintah untuk menjalankan server web saat kontainer dimulai
-CMD [ "npm", "run", "serve" ]
+# # Perintah untuk menjalankan server web saat kontainer dimulai
+CMD ["serve", "-s", "dist", "-l", "8000"]
