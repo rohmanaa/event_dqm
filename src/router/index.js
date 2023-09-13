@@ -12,6 +12,11 @@ const routes = [
         path: '/daftar-peserta',
         name: 'DaftarPeserta',
         component: () => import('@/views/DaftarPeserta.vue')
+    },
+    {
+        path: '/daftar-peserta-2',
+        name: 'DaftarPeserta2',
+        component: () => import('@/views/DaftarPeserta2.vue')
     }
 ]
 
