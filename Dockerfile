@@ -12,6 +12,12 @@ COPY . .
 # install pnpm
 RUN npm install -g pnpm
 
+# install vue-cli 
+RUN npm i -g @vue/cli @vue/cli-service-global
+
+#INSTALL serve
+RUN npm install -g serve
+
 # Install semua dependensi menggunakan pnpm
 RUN pnpm install
 
