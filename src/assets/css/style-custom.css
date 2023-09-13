@@ -1,12 +1,3 @@
-body {
-    background-color: rgb(230, 230, 230);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Membuat form berada di tengah vertikal */
-    margin: 0; /* Menghilangkan margin pada body */
-}
-
 /* Gaya untuk header form */
 .custom-form .custom-form-title {
     background-color: #1A3257 !important;

@@ -115,6 +115,17 @@
   </div>
 </template>
 
+<style>
+body {
+  background-color: rgb(230, 230, 230);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Membuat form berada di tengah vertikal */
+  margin: 0; /* Menghilangkan margin pada body */
+}
+</style>
+
 <script>
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -181,15 +192,18 @@ export default {
 
         // Handle respons dari API jika diperlukan
         console.log(response.data);
+        alert(response.data._id);
 
         // Menampilkan SweetAlert "Berhasil Terdaftar"
         await Swal.fire({
           icon: "success",
           title: "Berhasil Terdaftar",
           text: "Data Anda telah berhasil terdaftar.",
-          timer: 5000,
+          timer: 3000,
           showConfirmButton: false,
         });
+
+        window.location.href = process.env.BASEURL + "/sponsor" + response.data._id;
 
         // Reset formulir dan nonaktifkan indikator loading
         this.resetForm();
