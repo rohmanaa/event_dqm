@@ -10,8 +10,8 @@
           >
             <li>
               <a href="" class="nav-link px-2 link-body-emphasis">
-                <i class="fa fa-home" aria-hidden="true"></i> HOME</a
-              >
+                <i class="fa fa-home fs-1 text-success" aria-hidden="true"></i
+              ></a>
             </li>
           </ul>
 

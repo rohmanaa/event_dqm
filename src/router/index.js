@@ -14,7 +14,7 @@ const routes = [
         component: () => import('@/views/DaftarPeserta.vue')
     },
     {
-        path: '/sponsor/:_id',
+        path: '/sponsor',
         name: 'Sponsor',
         component: () => import('@/views/Sponsor.vue')
     }
