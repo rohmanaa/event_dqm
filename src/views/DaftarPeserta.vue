@@ -10,7 +10,11 @@
           >
             <li>
               <a href="" class="nav-link px-2 link-body-emphasis">
-                <i class="fa fa-home fs-1 text-success" aria-hidden="true"></i
+                <i
+                  class="fa fa-home text-success"
+                  aria-hidden="true"
+                  style="text-color: #1a3257 !important"
+                ></i
               ></a>
             </li>
           </ul>
@@ -26,9 +30,10 @@
         </div>
       </div>
     </header>
-    <main class="container">
+    <main class="container py-2">
       <div
-        class="d-flex align-items-center p-3 my-3 text-white bg-success rounded shadow-sm"
+        class="d-flex align-items-center p-3 text-white rounded shadow-sm"
+        style="background-color: #1a3257 !important"
       >
         <div class="lh-1">
           <h1 class="h6 mb-0 text-white lh-1">Daftar Peserta Event</h1>

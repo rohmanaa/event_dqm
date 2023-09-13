@@ -192,7 +192,7 @@ export default {
 
         // Handle respons dari API jika diperlukan
         console.log(response.data);
-        alert(response.data._id);
+        // alert(response.data._id);
 
         // Menampilkan SweetAlert "Berhasil Terdaftar"
         await Swal.fire({
@@ -203,7 +203,7 @@ export default {
           showConfirmButton: false,
         });
 
-        window.location.href = process.env.BASEURL + "/sponsor" + response.data._id;
+        // window.location.href = process.env.BASEURL + "/sponsor" + response.data._id;
 
         // Reset formulir dan nonaktifkan indikator loading
         this.resetForm();

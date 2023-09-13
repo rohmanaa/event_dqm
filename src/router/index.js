@@ -12,11 +12,6 @@ const routes = [
         path: '/daftar-peserta',
         name: 'DaftarPeserta',
         component: () => import('@/views/DaftarPeserta.vue')
-    },
-    {
-        path: '/sponsor',
-        name: 'Sponsor',
-        component: () => import('@/views/Sponsor.vue')
     }
 ]
 
