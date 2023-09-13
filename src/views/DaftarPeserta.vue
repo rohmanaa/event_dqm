@@ -81,8 +81,8 @@
                     }}</span>
                   </div>
                 </td>
-                <td>{{ peserta.hadir_lokasi }}</td>
-                <td>{{ peserta.waktu }}</td>
+                <td>{{ peserta.id_datang }}</td>
+                <td>{{ peserta.datang_pukul }}</td>
                 <td class="btn-group">
                   <!-- Tombol edit -->
                   <button
@@ -123,6 +123,7 @@ export default {
       .get("https://api-1-gtw.dq.akses.live/events/api/dataortu")
       .then((response) => {
         this.daftarPeserta = response.data;
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
