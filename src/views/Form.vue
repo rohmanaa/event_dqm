@@ -60,22 +60,6 @@
             </div>
 
             <div class="mb-3 text-start">
-              <label for="jumlah_datang" class="form-label custom-label"
-                >Jumlah datang</label
-              >
-              <input
-                type="number"
-                class="form-control"
-                id="jumlah_datang"
-                v-model="jumlah_datang"
-                placeholder="Jumlah datang"
-              />
-              <span v-if="jumlah_datangError" class="text-danger"
-                >Jumlah datang harus diisi.</span
-              >
-            </div>
-
-            <div class="mb-3 text-start">
               <label class="custom-label">Status Kehadiran</label><br />
               <div class="form-check form-check-inline">
                 <input
@@ -84,6 +68,7 @@
                   id="konfirmasi_datang"
                   value="Datang"
                   v-model="konfirmasi_datang"
+                  @change="handleKonfirmasiChange"
                 />
                 <label class="form-check-label" for="konfirmasi_datang">Datang</label>
               </div>
@@ -94,6 +79,7 @@
                   id="konfirmasi_tidak_datang"
                   value="Tidak Datang"
                   v-model="konfirmasi_datang"
+                  @change="handleKonfirmasiChange"
                 />
                 <label class="form-check-label" for="konfirmasi_tidak_datang"
                   >Tidak datang</label
@@ -101,6 +87,20 @@
               </div>
               <span v-if="konfirmasi_datangError" class="text-danger"
                 >Pilih salah satu opsi.</span
+              >
+            </div>
+
+            <div class="mb-3 text-start">
+              <label for="jumlah_datang" class="form-label custom-label"
+                >Jumlah datang</label
+              >
+              <select class="form-select" id="jumlah_datang" v-model="jumlah_datang">
+                <option value="0">Tidak Datang</option>
+                <option value="1">1 Orang</option>
+                <option value="2">2 Orang</option>
+              </select>
+              <span v-if="jumlah_datangError" class="text-danger"
+                >Jumlah datang harus diisi.</span
               >
             </div>
 
@@ -115,19 +115,31 @@
   </div>
 </template>
 
+<style>
+body {
+  background-color: rgb(230, 230, 230);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Membuat form berada di tengah vertikal */
+  margin: 0; /* Menghilangkan margin pada body */
+}
+</style>
+
 <script>
 import Swal from "sweetalert2";
 import axios from "axios";
 
 export default {
   name: "HelloWorld",
+
   data() {
     return {
       nama_anak: "",
       nama_ayah: "",
       nama_ibu: "",
       no_hp: "",
-      jumlah_datang: null,
+      jumlah_datang: "0", // Default value for Jumlah Datang
       konfirmasi_datang: "",
       nama_anakError: false,
       nama_ayahError: false,
@@ -180,15 +192,18 @@ export default {
 
         // Handle respons dari API jika diperlukan
         console.log(response.data);
+        // alert(response.data._id);
 
         // Menampilkan SweetAlert "Berhasil Terdaftar"
         await Swal.fire({
           icon: "success",
           title: "Berhasil Terdaftar",
           text: "Data Anda telah berhasil terdaftar.",
-          timer: 5000,
+          timer: 3000,
           showConfirmButton: false,
         });
+
+        // window.location.href = process.env.BASEURL + "/sponsor" + response.data._id;
 
         // Reset formulir dan nonaktifkan indikator loading
         this.resetForm();
@@ -234,6 +249,11 @@ export default {
       this.no_hp = "";
       this.jumlah_datang = null;
       this.konfirmasi_datang = "";
+    },
+    handleKonfirmasiChange() {
+      if (this.konfirmasi_datang === "Tidak Datang") {
+        this.jumlah_datang = "0";
+      }
     },
   },
 };
