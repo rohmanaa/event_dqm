@@ -90,12 +90,11 @@
               >
             </div>
 
-            <div class="mb-3 text-start">
+            <div class="mb-3 text-start" v-if="konfirmasi_datang === 'Datang'">
               <label for="jumlah_datang" class="form-label custom-label"
                 >Jumlah datang</label
               >
               <select class="form-select" id="jumlah_datang" v-model="jumlah_datang">
-                <option value="0">Tidak Datang</option>
                 <option value="1">1 Orang</option>
                 <option value="2">2 Orang</option>
               </select>
