@@ -70,7 +70,7 @@
                 <td>{{ peserta.nama_ibu }}</td>
                 <td>{{ peserta.jumlah_datang }} Orang</td>
                 <td>
-                  <div v-if="peserta.konfirmasi_datang === 'Datang'">
+                  <div v-if="peserta.konfirmasi_datang.toLowerCase() === 'datang'">
                     <span class="badge text-bg-success w-100">{{
                       peserta.konfirmasi_datang
                     }}</span>
