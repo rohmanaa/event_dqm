@@ -61,6 +61,7 @@
 
             <div class="mb-3 text-start">
               <label class="custom-label">Status Kehadiran</label><br />
+
               <div class="form-check form-check-inline">
                 <input
                   class="form-check-input"
@@ -72,6 +73,7 @@
                 />
                 <label class="form-check-label" for="konfirmasi_datang">Datang</label>
               </div>
+
               <div class="form-check form-check-inline">
                 <input
                   class="form-check-input"
@@ -85,6 +87,7 @@
                   >Tidak datang</label
                 >
               </div>
+
               <span v-if="konfirmasi_datangError" class="text-danger"
                 >Pilih salah satu opsi.</span
               >
@@ -94,10 +97,16 @@
               <label for="jumlah_datang" class="form-label custom-label"
                 >Jumlah datang</label
               >
-              <select class="form-select" id="jumlah_datang" v-model="jumlah_datang">
+              <select
+                class="form-select"
+                id="jumlah_datang"
+                v-model="jumlah_datang"
+                required
+              >
                 <option value="1">1 Orang</option>
                 <option value="2">2 Orang</option>
               </select>
+
               <span v-if="jumlah_datangError" class="text-danger"
                 >Jumlah datang harus diisi.</span
               >
