@@ -120,7 +120,7 @@ export default {
   created() {
     // Mengambil data peserta dari API menggunakan Axios
     axios
-      .get("https://api-1-gtw.dq.akses.live/events/api/dataortu")
+      .get(process.env.VUE_APP_API)
       .then((response) => {
         this.daftarPeserta = response.data;
         console.log(response.data);

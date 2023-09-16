@@ -18,11 +18,6 @@ const routes = [
         name: 'DaftarPeserta2',
         component: () => import('@/views/DaftarPeserta2.vue')
     },
-    {
-        path: '/dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/Dashboard.vue')
-    }
 ]
 
 //create router

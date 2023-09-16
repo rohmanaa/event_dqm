@@ -129,8 +129,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Membuat form berada di tengah vertikal */
-  margin: 0; /* Menghilangkan margin pada body */
+  height: 100vh;
+  /* Membuat form berada di tengah vertikal */
+  margin: 0;
+  /* Menghilangkan margin pada body */
 }
 </style>
 
