@@ -14,10 +14,10 @@ const routes = [
         component: () => import('@/views/DaftarPeserta.vue')
     },
     {
-        path: '/daftar-peserta2',
-        name: 'DaftarPeserta2',
-        component: () => import('@/views/DaftarPeserta2.vue')
-    },
+        path: '/daftar-event',
+        name: 'DaftarEvent',
+        component: () => import('@/views/DaftarEvent.vue')
+    }
 ]
 
 //create router
