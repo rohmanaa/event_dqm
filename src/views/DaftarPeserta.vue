@@ -1,38 +1,9 @@
 <template>
-  <body class="bg-body-tertiary">
-    <header class="p-3 mb-3 border-bottom bg-white sticky-top">
-      <div class="container">
-        <div
-          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
-        >
-          <ul
-            class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
-          >
-            <li>
-              <a href="" class="nav-link px-2 link-body-emphasis">
-                <i
-                  class="fa fa-home text-success"
-                  aria-hidden="true"
-                  style="text-color: #1a3257 !important"
-                ></i
-              ></a>
-            </li>
-          </ul>
-
-          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-            <input
-              type="search"
-              class="form-control"
-              placeholder="Search..."
-              aria-label="Search"
-            />
-          </form>
-        </div>
-      </div>
-    </header>
-    <main class="container py-2">
+  <div>
+    <div class="container py-5">
+      <!-- Header Section -->
       <div
-        class="d-flex align-items-center p-3 text-white rounded shadow-sm"
+        class="d-flex align-datas-center p-3 text-white rounded shadow-sm mb-3"
         style="background-color: #1a3257 !important"
       >
         <div class="lh-1">
@@ -41,105 +12,128 @@
         </div>
       </div>
 
-      <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom p-2">Recent updates</h6>
-        <div class="table-responsive">
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr class="text-center">
-                <th>No</th>
-                <th>Nama Anak</th>
-                <th>Nama Ayah</th>
-                <th>Nama Ibu</th>
-                <th>Jumlah Datang</th>
-                <th>Status Kehadiran</th>
-                <th>Hadir Lokasi</th>
-                <th>Waktu</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(peserta, index) in daftarPeserta"
-                :key="peserta.id"
-                class="text-center"
-              >
-                <td>{{ index + 1 }}</td>
-                <td>{{ peserta.nama_anak }}</td>
-                <td>{{ peserta.nama_ayah }}</td>
-                <td>{{ peserta.nama_ibu }}</td>
-                <td>{{ peserta.jumlah_datang }} Orang</td>
-                <td>
-                  <div v-if="peserta.konfirmasi_datang.toLowerCase() === 'datang'">
-                    <span class="badge text-bg-success w-100">{{
-                      peserta.konfirmasi_datang
-                    }}</span>
-                  </div>
-                  <div v-else>
-                    <span class="badge text-bg-danger w-100">{{
-                      peserta.konfirmasi_datang
-                    }}</span>
-                  </div>
-                </td>
-                <td>{{ peserta.id_datang }}</td>
-                <td>{{ peserta.datang_pukul }}</td>
-                <td class="btn-group">
-                  <!-- Tombol edit -->
-                  <button
-                    @click="editPeserta(peserta)"
-                    class="btn btn-primary btn-sm me-1"
-                  >
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                  </button>
-                  <!-- Tombol delete -->
-                  <button
-                    @click="deletePeserta(peserta.id)"
-                    class="btn btn-danger btn-sm"
-                  >
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <!-- Summary Cards -->
+      <div class="row mb-3">
+        <div class="col-lg-4">
+          <div class="card bg-primary text-white">
+            <div class="card-header">Konfirmasi</div>
+            <div class="card-body">
+              <h2 class="card-title">{{ totalDatang }}</h2>
+              <p class="card-text">Konfirmasi Datang</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card bg-danger text-white">
+            <div class="card-header">Konfirmasi</div>
+            <div class="card-body">
+              <h2 class="card-title">{{ totalTidakDatang }}</h2>
+              <p class="card-text">Konfirmasi Tidak Datang</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card bg-success text-white">
+            <div class="card-header">Konfirmasi</div>
+            <div class="card-body">
+              <h2 class="card-title">{{ totalLokasi }}</h2>
+              <p class="card-text">di Lokasi</p>
+            </div>
+          </div>
         </div>
       </div>
-    </main>
-  </body>
+
+      <!-- Data Table Section -->
+      <div class="container shadow-sm bg-body rounded p-2">
+        <table
+          id="myTable"
+          class="table table-striped table-bordered"
+          style="width: 100% height:fit-content"
+        >
+          <thead>
+            <tr>
+              <th>Nomor</th>
+              <th>Nama Anak</th>
+              <th>Nama Ayah</th>
+              <th>Nama Ibu</th>
+              <th>Konfirmasi Datang</th>
+              <th>Jumlah Datang</th>
+              <th>Waktu</th>
+              <th>Lokasi</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import $ from "jquery";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.css";
+import "datatables.net-bs4";
 
 export default {
   data() {
     return {
-      daftarPeserta: [],
+      data: [],
+      totalDatang: 0,
+      totalTidakDatang: 0,
+      totalLokasi: 0,
     };
   },
-  created() {
-    // Mengambil data peserta dari API menggunakan Axios
-    axios
-      .get(process.env.VUE_APP_API)
-      .then((response) => {
-        this.daftarPeserta = response.data;
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+  mounted() {
+    axios.get("https://api-1-gtw.dq.akses.live/events/api/dataortu").then((response) => {
+      this.data = response.data; // Menyimpan data dari API ke variabel data
+      this.calculateTotalCounts(); // Menghitung total datang, tidak datang, dan lokasi
+      this.initDataTable(); // Menginisialisasi DataTable setelah data dimuat
+    });
   },
   methods: {
-    editPeserta(peserta) {
-      // Logika untuk mengedit peserta
-      // Anda dapat menampilkan formulir pengeditan atau melakukan tindakan lain
-      console.log("Edit peserta:", peserta);
+    initDataTable() {
+      $("#myTable").DataTable({
+        data: this.data,
+        columns: [
+          { data: "_id" },
+          { data: "nama_anak" },
+          { data: "nama_ayah" },
+          { data: "nama_ibu" },
+          {
+            data: "konfirmasi_datang",
+            render: function (data) {
+              const isDatang = data.toLowerCase() === "datang";
+              return isDatang
+                ? `<div><span class="badge text-bg-success w-100">${data}</span></div>`
+                : `<div><span class="badge text-bg-danger w-100">${data}</span></div>`;
+            },
+          },
+          { data: "jumlah_datang" },
+          { data: "datang_pukul" },
+          { data: "is_datang" },
+        ],
+      });
     },
-    deletePeserta(pesertaId) {
-      // Logika untuk menghapus peserta berdasarkan ID
-      // Anda dapat menampilkan konfirmasi sebelum menghapus atau melakukan tindakan lain
-      console.log("Hapus peserta dengan ID:", pesertaId);
+    calculateTotalCounts() {
+      // Menghitung total Datang
+      this.totalDatang = this.data.filter(
+        (data) => data.konfirmasi_datang.toLowerCase() === "datang"
+      ).length;
+
+      // Menghitung total Tidak Datang
+      this.totalTidakDatang = this.data.filter(
+        (data) => data.konfirmasi_datang.toLowerCase() === "tidak datang"
+      ).length;
+
+      // Menghitung total Lokasi
+
+      this.totalLokasi = this.data.filter((item) => item.is_datang === true).length;
     },
   },
 };
 </script>
+
+<style>
+/* In your CSS file (e.g., App.vue or a dedicated CSS file) */
+@import "datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+</style>
