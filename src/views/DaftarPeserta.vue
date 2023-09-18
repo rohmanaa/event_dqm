@@ -84,7 +84,7 @@ export default {
     };
   },
   mounted() {
-    axios.get("https://api-1-gtw.dq.akses.live/events/api/dataortu").then((response) => {
+    axios.get( process.env.VUE_APP_BEURL + "/api/dataortu").then((response) => {
       this.data = response.data; // Menyimpan data dari API ke variabel data
       this.calculateTotalCounts(); // Menghitung total datang, tidak datang, dan lokasi
       this.initDataTable(); // Menginisialisasi DataTable setelah data dimuat
