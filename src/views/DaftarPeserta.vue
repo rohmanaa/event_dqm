@@ -52,7 +52,7 @@
         >
           <thead>
             <tr>
-              <th>Nomor</th>
+              <th>No</th>
               <th>Nama Anak</th>
               <th>Nama Ayah</th>
               <th>Nama Ibu</th>
@@ -95,7 +95,12 @@ export default {
       $("#myTable").DataTable({
         data: this.data,
         columns: [
-          { data: "_id" },
+          {              data: null,
+            render: function (data, type, row, meta) {
+              // Mengembalikan nomor berurut berdasarkan indeks
+              return meta.row + 1;
+            },
+          },
           { data: "nama_anak" },
           { data: "nama_ayah" },
           { data: "nama_ibu" },
