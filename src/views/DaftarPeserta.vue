@@ -84,11 +84,29 @@ export default {
     };
   },
   mounted() {
-    axios.get( process.env.VUE_APP_BEURL + "/api/dataortu").then((response) => {
-      this.data = response.data; // Menyimpan data dari API ke variabel data
-      this.calculateTotalCounts(); // Menghitung total datang, tidak datang, dan lokasi
-      this.initDataTable(); // Menginisialisasi DataTable setelah data dimuat
-    });
+    axios.get(process.env.VUE_APP_BEURL + "/events/api/dataortu")
+      .then((response) => {
+        // Handle the successful response
+        this.data = response.data;
+        this.calculateTotalCounts();
+        this.initDataTable();
+      })
+      .catch((error) => {
+        // Handle errors, including the "404" error
+        if (error.response) {
+          // The request was made, but the server responded with a status code that falls out of the range of 2xx
+          console.error('Server responded with a non-success status code:', error.response.status);
+          console.error('Response data:', error.response.data);
+        } else if (error.request) {
+          // The request was made, but no response was received (e.g., network error)
+          console.error('No response received. The request might not have reached the server.');
+        } else {
+          // Something else went wrong
+          console.error('An error occurred:', error.message);
+        }
+      });
+
+
   },
   methods: {
     initDataTable() {
