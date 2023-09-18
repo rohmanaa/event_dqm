@@ -16,8 +16,8 @@
       <div class="row mb-3">
         <div class="col-lg-4">
           <div class="card bg-primary text-white">
-            <div class="card-header">Konfirmasi</div>
-            <div class="card-body">
+            <div class="card-header text-center">Konfirmasi</div>
+            <div class="card-body text-center">
               <h2 class="card-title">{{ totalDatang }}</h2>
               <p class="card-text">Konfirmasi Datang</p>
             </div>
@@ -25,8 +25,8 @@
         </div>
         <div class="col-lg-4">
           <div class="card bg-danger text-white">
-            <div class="card-header">Konfirmasi</div>
-            <div class="card-body">
+            <div class="card-header text-center">Konfirmasi</div>
+            <div class="card-body text-center">
               <h2 class="card-title">{{ totalTidakDatang }}</h2>
               <p class="card-text">Konfirmasi Tidak Datang</p>
             </div>
@@ -34,8 +34,8 @@
         </div>
         <div class="col-lg-4">
           <div class="card bg-success text-white">
-            <div class="card-header">Konfirmasi</div>
-            <div class="card-body">
+            <div class="card-header text-center">Konfirmasi</div>
+            <div class="card-body text-center">
               <h2 class="card-title">{{ totalLokasi }}</h2>
               <p class="card-text">di Lokasi</p>
             </div>
