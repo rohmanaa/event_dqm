@@ -195,7 +195,7 @@ export default {
       axios.defaults.headers.common["Content-Type"] = "application/json";
 
       try {
-        const response = await axios.post(process.env.VUE_APP_BEURL + "/events/api/dataortu",
+        const response = await axios.post(process.env.VUE_APP_BEURL + "/dataortu",
           dataToSend
         );
 

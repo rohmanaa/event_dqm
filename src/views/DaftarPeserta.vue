@@ -14,7 +14,16 @@
 
       <!-- Summary Cards -->
       <div class="row mb-3">
-        <div class="col-lg-4">
+      <div class="col-lg-3">
+          <div class="card bg-warning text-white">
+            <div class="card-header text-center">Hadir</div>
+            <div class="card-body text-center">
+              <h2 class="card-title">{{ totalHadir }}</h2>
+              <p class="card-text">Konfirmasi Kehadiran</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
           <div class="card bg-primary text-white">
             <div class="card-header text-center">Konfirmasi</div>
             <div class="card-body text-center">
@@ -23,7 +32,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <div class="card bg-danger text-white">
             <div class="card-header text-center">Konfirmasi</div>
             <div class="card-body text-center">
@@ -32,7 +41,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <div class="card bg-success text-white">
             <div class="card-header text-center">Konfirmasi</div>
             <div class="card-body text-center">
@@ -52,14 +61,14 @@
         >
           <thead>
             <tr>
-              <th>No</th>
+              <th width="5px">No</th>
               <th>Nama Anak</th>
               <th>Nama Ayah</th>
               <th>Nama Ibu</th>
-              <th>Konfirmasi Datang</th>
-              <th>Jumlah Datang</th>
-              <th>Waktu</th>
-              <th>Lokasi</th>
+              <th width="5px">Konfirmasi Datang</th>
+              <th width="5px" class="text-center">Jumlah Datang</th>
+              <th width="5px" class="text-center">Waktu</th>
+              <th width="5px">Lokasi</th>
             </tr>
           </thead>
         </table>
@@ -81,39 +90,28 @@ export default {
       totalDatang: 0,
       totalTidakDatang: 0,
       totalLokasi: 0,
+      totalHadir: 0
     };
   },
   mounted() {
-    axios.get(process.env.VUE_APP_BEURL + "/events/api/dataortu")
-      .then((response) => {
-        // Handle the successful response
-        this.data = response.data;
-        this.calculateTotalCounts();
-        this.initDataTable();
-      })
-      .catch((error) => {
-        // Handle errors, including the "404" error
-        if (error.response) {
-          // The request was made, but the server responded with a status code that falls out of the range of 2xx
-          console.error('Server responded with a non-success status code:', error.response.status);
-          console.error('Response data:', error.response.data);
-        } else if (error.request) {
-          // The request was made, but no response was received (e.g., network error)
-          console.error('No response received. The request might not have reached the server.');
-        } else {
-          // Something else went wrong
-          console.error('An error occurred:', error.message);
-        }
-      });
-
-
+    axios.get( process.env.VUE_APP_BEURL + "/dataortu").then((response) => {
+      this.data = response.data; // Menyimpan data dari API ke variabel data
+      this.calculateTotalCounts(); // Menghitung total datang, tidak datang, dan lokasi
+      this.initDataTable(); // Menginisialisasi DataTable setelah data dimuat
+    });
   },
   methods: {
     initDataTable() {
       $("#myTable").DataTable({
         data: this.data,
+        responsive: true,
+        lengthMenu: [
+            [ 10, 25, 50, 100, -1 ],
+            [ '10 rows', '25 rows', '50 rows', '100 rows', 'Show All']
+        ],
         columns: [
-          {              data: null,
+          {
+            data: null,
             render: function (data, type, row, meta) {
               // Mengembalikan nomor berurut berdasarkan indeks
               return meta.row + 1;
@@ -131,9 +129,27 @@ export default {
                 : `<div><span class="badge text-bg-danger w-100">${data}</span></div>`;
             },
           },
-          { data: "jumlah_datang" },
-          { data: "datang_pukul" },
-          { data: "is_datang" },
+          { 
+            data: "jumlah_datang",
+            render: function (data) {
+              const jmldtg = data
+              return jmldtg ? data : ``
+            }
+          },
+          { 
+            data: "datang_pukul",
+            render: function (data) {
+              const dtgpkl = data
+              return dtgpkl ? data : ``
+            }
+          },
+          {
+            data: "is_datang",
+            render: function (data) {
+              const isdtg = data
+              return isdtg ? data : ``
+            }
+          },
         ],
       });
     },
@@ -148,8 +164,10 @@ export default {
         (data) => data.konfirmasi_datang.toLowerCase() === "tidak datang"
       ).length;
 
+      this.totalHadir = this.data.reduce((accumulator, currentItem) => {
+        return accumulator + currentItem.jumlah_datang; // Replace 'value' with the actual property you want to sum
+      }, 0);
       // Menghitung total Lokasi
-
       this.totalLokasi = this.data.filter((item) => item.is_datang === true).length;
     },
   },
