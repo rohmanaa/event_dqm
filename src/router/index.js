@@ -12,11 +12,6 @@ const routes = [
         path: '/daftar-peserta',
         name: 'DaftarPeserta',
         component: () => import('@/views/DaftarPeserta.vue')
-    },
-    {
-        path: '/daftar-event',
-        name: 'DaftarEvent',
-        component: () => import('@/views/DaftarEvent.vue')
     }
 ]
 
